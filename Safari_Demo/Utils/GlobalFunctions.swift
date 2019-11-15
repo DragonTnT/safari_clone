@@ -24,3 +24,10 @@ func delay(_ timeInterval: TimeInterval, closure: @escaping()->()) {
         closure()
     }
 }
+
+
+//计算searchBar中占位的偏移量
+func calculateOffsetXOnSearchBar(from holder: String)-> CGFloat {
+    let hostWidth: CGFloat = holder.calculateWidthWith(height: 20, font: UIFont.systemFont(ofSize: 16))
+    return ((kScreenW - 2 * 20) - hostWidth - 50)/2.0
+}

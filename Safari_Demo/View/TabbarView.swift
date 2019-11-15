@@ -8,6 +8,14 @@
 
 import UIKit
 
+protocol TabbarViewDelegate: class {
+    func tabbarViewDidClickBack(_ tabbarView: TabbarView)
+    func tabbarViewDidClickForward(_ tabbarView: TabbarView)
+    func tabbarViewDidClickShare(_ tabbarView: TabbarView)
+    func tabbarViewDidClickMark(_ tabbarView: TabbarView)
+    func tabbarViewDidClickSwitch(_ tabbarView: TabbarView)
+}
+
 class TabbarView: UIView {
     
     let backBtn: UIButton = UIButton(type: .custom)      //后退
@@ -15,11 +23,10 @@ class TabbarView: UIView {
     var shareBtn: UIButton = UIButton(type: .custom)     //分享
     var markBtn: UIButton = UIButton(type: .custom)      //书签
     var switchBtn: UIButton = UIButton(type: .custom)      //编辑
-
-    static let shared = TabbarView()
     
-    private init() {
-        let frame = CGRect(x: 0, y: kScreenH - tabbarH, width: kScreenW, height: tabbarH)
+    weak var delegate: TabbarViewDelegate?
+    
+    override init(frame: CGRect) {        
         super.init(frame: frame)
         setupUI()
         addSubViews()
@@ -65,15 +72,36 @@ class TabbarView: UIView {
         markBtn.setImage(forNormal: "tabbar_mark_normal", forDisabled: "tabbar_mark_disabled")
         
         switchBtn.setImage(UIImage(named: "tabbar_switch_normal"), for: .normal)
+        
+        backBtn.addTarget(self, action: #selector(didClickBtn(_:)), for: .touchUpInside)
+        forwardBtn.addTarget(self, action: #selector(didClickBtn(_:)), for: .touchUpInside)
+        shareBtn.addTarget(self, action: #selector(didClickBtn(_:)), for: .touchUpInside)
+        markBtn.addTarget(self, action: #selector(didClickBtn(_:)), for: .touchUpInside)
+        switchBtn.addTarget(self, action: #selector(didClickBtn(_:)), for: .touchUpInside)
+        
     }
     
     private func configBtnStatus() {
         backBtn.isEnabled = false
         forwardBtn.isEnabled = false
-        shareBtn.isEnabled = false
-        markBtn.isEnabled = false
     }
     
+    @objc private func didClickBtn(_ btn: UIButton) {
+        switch btn {
+        case backBtn:
+            delegate?.tabbarViewDidClickBack(self)
+        case forwardBtn:
+            delegate?.tabbarViewDidClickForward(self)
+        case shareBtn:
+            delegate?.tabbarViewDidClickShare(self)
+            case markBtn:
+            delegate?.tabbarViewDidClickMark(self)
+            case switchBtn:
+            delegate?.tabbarViewDidClickSwitch(self)
+        default:
+            return
+        }
+    }
 }
 
 fileprivate extension UIButton {

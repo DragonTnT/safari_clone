@@ -13,9 +13,9 @@ private let itemLength: CGFloat = (kScreenW - 2 * 20 - 3 * 32)/4
 class PersonalCollectionView: UICollectionView {
 
     init() {
-        let frame = CGRect(x: 0, y: navigationH, width: kScreenW, height: kScreenH - navigationH)
+        let frame = CGRect(x: 0, y: navigationH, width: kScreenW, height: kScreenH - navigationH - tabbarH)
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSize(width: itemLength, height: itemLength + 35)
+        flowLayout.itemSize = CGSize(width: itemLength, height: itemLength + 50)
         flowLayout.minimumInteritemSpacing = 32
         flowLayout.minimumLineSpacing = 27
         flowLayout.scrollDirection = .vertical

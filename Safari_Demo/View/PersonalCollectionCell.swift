@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class PersonalCollectionCell: UICollectionViewCell {
     
     static let reuseIndentifier = "PersonalCollectionCell"
