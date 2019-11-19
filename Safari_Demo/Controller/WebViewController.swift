@@ -9,8 +9,13 @@
 import UIKit
 import WebKit
 
+protocol WebViewControllerDelegate: class {
+    func webViewControllerDidClickSwitch(_ controller: WebViewController)
+}
 
 class WebViewController: UIViewController {
+    
+    weak var delegate: WebViewControllerDelegate?
     
     private var cancelBtn: UIButton?
     private var searchTF: UITextField!
@@ -306,7 +311,7 @@ extension WebViewController: TabbarViewDelegate {
         print("mark")
     }
     func tabbarViewDidClickSwitch(_ tabbarView: TabbarView) {
-        print("switch")
+        delegate?.webViewControllerDidClickSwitch(self)
     }
 }
 

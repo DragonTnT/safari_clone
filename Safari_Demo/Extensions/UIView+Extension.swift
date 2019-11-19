@@ -23,3 +23,15 @@ extension UIView {
         }
     }
 }
+
+extension UIView {
+    /// 截屏Image
+    var captureImage: UIImage? {        
+        UIGraphicsBeginImageContextWithOptions(frame.size, true, UIScreen.main.scale)
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        return image
+    }
+}
