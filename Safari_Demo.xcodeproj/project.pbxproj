@@ -14,6 +14,8 @@
 		0618147C2366D5BA00BBC254 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0618147A2366D5BA00BBC254 /* LaunchScreen.storyboard */; };
 		061CF7FB23693DE1000D2EAD /* UIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061CF7FA23693DE1000D2EAD /* UIManager.swift */; };
 		061CF7FD23696384000D2EAD /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061CF7FC23696384000D2EAD /* UIView+Extension.swift */; };
+		0631223B23866B4300A2F54B /* FullScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0631223A23866B4300A2F54B /* FullScreenLayout.swift */; };
+		0631223D2386708600A2F54B /* SafariIPhoneCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0631223C2386708600A2F54B /* SafariIPhoneCollectionViewLayout.swift */; };
 		064CCC13236A809900C93761 /* PersonalCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064CCC11236A809900C93761 /* PersonalCollectionCell.swift */; };
 		064CCC14236A809900C93761 /* PersonalCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 064CCC12236A809900C93761 /* PersonalCollectionCell.xib */; };
 		064CCC17236A85A900C93761 /* TransitingForCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064CCC16236A85A900C93761 /* TransitingForCollection.swift */; };
@@ -24,9 +26,9 @@
 		064DEA052383EAA5000DDDE0 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064DEA042383EAA5000DDDE0 /* CardCollectionViewCell.swift */; };
 		064DEA072383EBC3000DDDE0 /* CardCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064DEA062383EBC3000DDDE0 /* CardCollectionViewLayout.swift */; };
 		064DEA092383EC38000DDDE0 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064DEA082383EC38000DDDE0 /* WebViewController.swift */; };
+		065A6E632385150E0085AB1B /* CardTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065A6E622385150E0085AB1B /* CardTabbarView.swift */; };
 		066815FE237A3FBB00DAE45B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066815FD237A3FBB00DAE45B /* Extensions.swift */; };
 		066DB74F237E829300CF048A /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066DB74D237E829300CF048A /* TabbarView.swift */; };
-		066DB750237E829300CF048A /* TabbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 066DB74E237E829300CF048A /* TabbarView.xib */; };
 		066DB757237EA32C00CF048A /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066DB756237EA32C00CF048A /* NavigationView.swift */; };
 		066EE01223740CE300ED65C8 /* RuntimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066EE01123740CE300ED65C8 /* RuntimeHelper.swift */; };
 		06A5883C2375536C001C6AF0 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5883B2375536C001C6AF0 /* String+extension.swift */; };
@@ -44,6 +46,8 @@
 		0618147D2366D5BA00BBC254 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		061CF7FA23693DE1000D2EAD /* UIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIManager.swift; sourceTree = "<group>"; };
 		061CF7FC23696384000D2EAD /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		0631223A23866B4300A2F54B /* FullScreenLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenLayout.swift; sourceTree = "<group>"; };
+		0631223C2386708600A2F54B /* SafariIPhoneCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafariIPhoneCollectionViewLayout.swift; sourceTree = "<group>"; };
 		064CCC11236A809900C93761 /* PersonalCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalCollectionCell.swift; sourceTree = "<group>"; };
 		064CCC12236A809900C93761 /* PersonalCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonalCollectionCell.xib; sourceTree = "<group>"; };
 		064CCC16236A85A900C93761 /* TransitingForCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitingForCollection.swift; sourceTree = "<group>"; };
@@ -54,9 +58,9 @@
 		064DEA042383EAA5000DDDE0 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		064DEA062383EBC3000DDDE0 /* CardCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewLayout.swift; sourceTree = "<group>"; };
 		064DEA082383EC38000DDDE0 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		065A6E622385150E0085AB1B /* CardTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTabbarView.swift; sourceTree = "<group>"; };
 		066815FD237A3FBB00DAE45B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		066DB74D237E829300CF048A /* TabbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
-		066DB74E237E829300CF048A /* TabbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabbarView.xib; sourceTree = "<group>"; };
 		066DB756237EA32C00CF048A /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		066EE01123740CE300ED65C8 /* RuntimeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuntimeHelper.swift; sourceTree = "<group>"; };
 		06A5883B2375536C001C6AF0 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
@@ -132,13 +136,15 @@
 			children = (
 				066DB756237EA32C00CF048A /* NavigationView.swift */,
 				066DB74D237E829300CF048A /* TabbarView.swift */,
-				066DB74E237E829300CF048A /* TabbarView.xib */,
+				065A6E622385150E0085AB1B /* CardTabbarView.swift */,
 				064CCC11236A809900C93761 /* PersonalCollectionCell.swift */,
 				064CCC12236A809900C93761 /* PersonalCollectionCell.xib */,
 				064CCC1B236AAFFB00C93761 /* PersonalCollectionView.swift */,
 				0613A06A236BDC5B00F80D0F /* PersonalCollectionHeaderView.swift */,
 				064DEA042383EAA5000DDDE0 /* CardCollectionViewCell.swift */,
 				064DEA062383EBC3000DDDE0 /* CardCollectionViewLayout.swift */,
+				0631223C2386708600A2F54B /* SafariIPhoneCollectionViewLayout.swift */,
+				0631223A23866B4300A2F54B /* FullScreenLayout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -250,7 +256,6 @@
 				061814792366D5BA00BBC254 /* Assets.xcassets in Resources */,
 				061814772366D5BA00BBC254 /* Main.storyboard in Resources */,
 				064CCC14236A809900C93761 /* PersonalCollectionCell.xib in Resources */,
-				066DB750237E829300CF048A /* TabbarView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +268,7 @@
 			files = (
 				064CCC17236A85A900C93761 /* TransitingForCollection.swift in Sources */,
 				064CCC1C236AAFFB00C93761 /* PersonalCollectionView.swift in Sources */,
+				0631223D2386708600A2F54B /* SafariIPhoneCollectionViewLayout.swift in Sources */,
 				064CCC13236A809900C93761 /* PersonalCollectionCell.swift in Sources */,
 				064DEA092383EC38000DDDE0 /* WebViewController.swift in Sources */,
 				0613A06B236BDC5B00F80D0F /* PersonalCollectionHeaderView.swift in Sources */,
@@ -281,6 +287,8 @@
 				066815FE237A3FBB00DAE45B /* Extensions.swift in Sources */,
 				06A5883C2375536C001C6AF0 /* String+extension.swift in Sources */,
 				061814702366D5BA00BBC254 /* AppDelegate.swift in Sources */,
+				0631223B23866B4300A2F54B /* FullScreenLayout.swift in Sources */,
+				065A6E632385150E0085AB1B /* CardTabbarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,11 +22,9 @@ extension UIView {
             layer.masksToBounds = newValue > 0
         }
     }
-}
-
-extension UIView {
+    
     /// 截屏Image
-    var captureImage: UIImage? {        
+    var captureImage: UIImage? {
         UIGraphicsBeginImageContextWithOptions(frame.size, true, UIScreen.main.scale)
         layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -34,4 +32,11 @@ extension UIView {
         UIGraphicsEndImageContext()
         return image
     }
+    
+    /// 判断视图类型
+    func isKindOfClass(className: String)-> Bool {
+        guard let thisClass = NSClassFromString(className) else { return false }
+        return self.isKind(of: thisClass)
+    }
 }
+

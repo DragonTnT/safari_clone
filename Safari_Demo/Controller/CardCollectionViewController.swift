@@ -24,7 +24,7 @@ public protocol CardCollectionViewControllerDataSource: class {
     func indexForActiveTab() -> Int?
     
     /// Called when a tab was manually added. Add a new tab to data storage.
-    func tabAdded(atIndex index: Int)
+    func tabAdded()
     
     /// Called when a tab was closed by the user. Remove it from data storage.
     func tabRemoved(atIndex index: Int)
@@ -36,9 +36,11 @@ public protocol CardCollectionViewControllerDataSource: class {
 /// Conform to this delegate protocol to know when the tilted tab view does things.
 public protocol CardCollectionViewControllerDelegate: class {
     
+    func tapWillSelect(atIndex index: Int)
     /// The user tapped on the tab at the given index.
     func tabSelected(atIndex index: Int)
 
+    func tabHasCleared()
 }
 
 class CardCollectionViewController: UICollectionViewController {
@@ -46,18 +48,6 @@ class CardCollectionViewController: UICollectionViewController {
     public weak var dataSource: CardCollectionViewControllerDataSource?
     public weak var delegate: CardCollectionViewControllerDelegate?
     public var selectedIndexOfSubVC: Int = 0
-    
-    /// Create a new tilted tab view controller.
-    public init() {
-        let layout = CardCollectionViewLayout()
-        super.init(collectionViewLayout: layout)
-        layout.delegate = self
-        layout.dataSource = self
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }    
 
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,26 +62,25 @@ class CardCollectionViewController: UICollectionViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(CardCollectionViewCell.self, forCellWithReuseIdentifier: CardCollectionViewCell.reuseIndentifier)
-        collectionView.collectionViewLayout = layout
+        collectionView.collectionViewLayout = fullScreenLayout
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
         } else {
             self.automaticallyAdjustsScrollViewInsets = false
         }
+        
     }
     
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    lazy var layout: CardCollectionViewLayout = {
-        let layout = CardCollectionViewLayout()
-        layout.delegate = self
-        layout.dataSource = self
+    lazy var cardLayout: SafariIPhoneCollectionViewLayout = {
+        let layout = SafariIPhoneCollectionViewLayout()
         self.collectionView?.collectionViewLayout = layout
         return layout
     }()
-
+    
+    lazy var fullScreenLayout: FullScreenLayout = {
+        let layout = FullScreenLayout()
+        return layout
+    }()
 }
 
 // MARK: - collectionViewDataSource,collectionViewDelegate
@@ -120,6 +109,7 @@ extension CardCollectionViewController {
     
     open override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        delegate?.tapWillSelect(atIndex: indexPath.item)
         showFullScreenWith(indexPath: indexPath)
     }
 
@@ -141,7 +131,7 @@ extension CardCollectionViewController {
     /// Add a new tab at the given index. Be sure to also add a model for this tab to the data source's model.
     /// The tabAdded data source method will be called by this method.
     public func addTab(atIndex index: Int) {
-        dataSource?.tabAdded(atIndex: index)
+        dataSource?.tabAdded()
         let indexPath = IndexPath(item: index, section: 0)
         let layout = self.collectionView?.collectionViewLayout as? CardCollectionViewLayout
         layout?.addingIndexPath = indexPath
@@ -157,40 +147,38 @@ extension CardCollectionViewController {
         let indexPath = IndexPath(item: index, section: 0)
         let layout = self.collectionView?.collectionViewLayout as? CardCollectionViewLayout
         layout?.removingIndexPath = indexPath
-        self.collectionView?.deleteItems(at: [indexPath])
+        self.collectionView?.deleteItems(at: [indexPath])        
         layout?.removingIndexPath = nil
+        
+        if collectionView.numberOfItems(inSection: 0) == 0 {
+            delegate?.tabHasCleared()
+            let indexPath = IndexPath(item: 0, section: 0)
+            collectionView.insertItems(at: [indexPath])
+            layout?.isFullScreen = true
+            layout?.indexOfFullScreen = 0
+            collectionView.reloadData()
+        }
     }
     
     
     func showFullScreenWith(indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CardCollectionViewCell else { return }
         cell.hideHeaderView()
+        fullScreenLayout.indexOfFullScreen = indexPath.item
         
-        guard let layout = collectionView.collectionViewLayout as? CardCollectionViewLayout else { return }
-        layout.isFullScreen = true
-        layout.indexOfFullScreen = indexPath.item
-        
-        collectionView.performBatchUpdates(nil) { (finished) in
-            if finished {
-                self.delegate?.tabSelected(atIndex: indexPath.item)
-            }
+        collectionView.setCollectionViewLayout(fullScreenLayout, animated: true) { (finished) in
+            self.delegate?.tabSelected(atIndex: indexPath.item)
         }
-        
         selectedIndexOfSubVC = indexPath.item
     }
     
     func showCollectionViewWith(indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CardCollectionViewCell else { return }
         cell.showHeaderView()
-            
-        let layout = collectionView.collectionViewLayout as! CardCollectionViewLayout
-        layout.isFullScreen = false
 
         //在完成layout布局后，再次调用reloadData。是为了防止点击cell顺序不对的bug
-        collectionView.performBatchUpdates(nil) { (finished) in
-            if finished {
-                self.collectionView.reloadData()
-            }
+        collectionView.setCollectionViewLayout(cardLayout, animated: true) { (isFinished) in
+            self.collectionView.reloadData()
         }
     }
 }

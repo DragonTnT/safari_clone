@@ -82,23 +82,7 @@ class CardCollectionViewCell: UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
-    override var isHighlighted: Bool {
-        didSet {
-            let transform = isHighlighted ? CGAffineTransform(scaleX: 1.05, y: 1.05) : .identity
-            UIView.animate(
-                withDuration: 0.3,
-                delay: 0,
-                usingSpringWithDamping: 500,
-                initialSpringVelocity: 3,
-                options: .allowUserInteraction,
-                animations: {
-                    self.contentView.transform = transform
-                    self.backgroundView?.transform = transform
-                },
-                completion: nil
-            )
-        }
-    }
+
     
     override func layoutSubviews() {
         super.layoutSubviews()

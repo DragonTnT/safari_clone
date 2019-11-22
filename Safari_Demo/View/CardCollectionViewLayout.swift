@@ -37,12 +37,8 @@ class CardCollectionViewLayout: UICollectionViewLayout {
     private let standardDepth: CGFloat = 200
     private let distanceBetweenItems: CGFloat = 123
     
-    var isFullScreen: Bool = false
+    var isFullScreen: Bool = true
     var indexOfFullScreen: Int = 0
-    
-    internal var currentMotionOffset: UIOffset = UIOffset(horizontal: 0, vertical: 0) {
-        didSet { self.invalidateLayout() }
-    }
     
     override func prepare() {
         super.prepare()
@@ -70,9 +66,6 @@ class CardCollectionViewLayout: UICollectionViewLayout {
                 let indexPath = IndexPath(item: item, section: section)
                 let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
                 
-                if isFullScreen {
-                    attributes.frame = CGRect(x: 0, y: CGFloat((item - indexOfFullScreen)) * kScreenH, width: kScreenW, height: kScreenH)
-                } else {
                     attributes.frame = CGRect(
                         x: (collectionView.bounds.width - itemWidth) / 2,
                         y: CGFloat(item) * itemDistance,
@@ -86,7 +79,7 @@ class CardCollectionViewLayout: UICollectionViewLayout {
                         let normalisedDistanceRatio = (max(-1, min(1, distanceRatio)) + 1) / 2
                         return minimumAngle + (normalisedDistanceRatio * (maximumAngle - minimumAngle))
                     }()
-                    
+
                     let rotation = CATransform3DMakeRotation(CGFloat.pi * angle / 180, 1, 0, 0)
                     let downTranslation = CATransform3DMakeTranslation(0, 0, -standardDepth)
                     let upTranslation = CATransform3DMakeTranslation(0, 0, standardDepth)
@@ -95,8 +88,9 @@ class CardCollectionViewLayout: UICollectionViewLayout {
                     let perspective = CATransform3DConcat(CATransform3DConcat(downTranslation, scale), upTranslation)
 
                     attributes.transform3D = CATransform3DConcat(rotation, perspective)
+
                     attributes.zIndex = item
-                }
+//                }
                 
                 layoutAttributes[indexPath] = attributes
                 contentHeight += itemDistance
@@ -108,12 +102,7 @@ class CardCollectionViewLayout: UICollectionViewLayout {
     }
     
     override var collectionViewContentSize: CGSize {
-        if isFullScreen {
-            return CGSize(width: kScreenW, height: kScreenH)
-        } else {
-            return CGSize(width: collectionView?.frame.size.width ?? 0, height: contentHeight)
-        }
-        
+        return CGSize(width: collectionView?.frame.size.width ?? 0, height: contentHeight)
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {

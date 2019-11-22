@@ -16,11 +16,8 @@ protocol WebViewControllerDelegate: class {
 class WebViewController: UIViewController {
     
     weak var delegate: WebViewControllerDelegate?
-    
-    private var cancelBtn: UIButton?
     private var searchTF: UITextField!
-    
-    var searchBar: UISearchBar!
+    private var searchBar: UISearchBar!
     
     //是否有加载页，默认没有，显示个人收藏页面
     private var haveLoadedPage: Bool = false
@@ -28,21 +25,12 @@ class WebViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //保证webview顶部和底部的正常布局
-//        if #available(iOS 11.0, *) {
-//            webView.scrollView.contentInsetAdjustmentBehavior = .never
-//        } else {
-//            automaticallyAdjustsScrollViewInsets = true
-//            edgesForExtendedLayout = []
-//        }
-//        navigationController?.navigationBar.isTranslucent = false
-        
-        
         
         addSubViews()
         addObserveOnWebView()
         showPersonalView()
         configSearchBar()
+        
     }
 
     
@@ -255,7 +243,8 @@ extension WebViewController: UICollectionViewDelegate, UICollectionViewDataSourc
         if scrollView == personalCollectionView {
             if searchBar.isFirstResponder {
                 searchBar.resignFirstResponder()
-                setCancelBtnEnable()
+                //因为关闭键盘时，系统会使该按钮失效
+                navView.cancelBtn?.isEnabled = true
             }
         } else if scrollView == webView.scrollView {
             if !haveLoadedPage { return }
@@ -280,8 +269,8 @@ extension WebViewController: UICollectionViewDelegate, UICollectionViewDataSourc
             let scale = 1 - (offSetY / differenceInNavigationH) * (1 - 0.75)
             searchBar.transform = CGAffineTransform(scaleX: scale, y: scale)
             
-            //10是searchTextField默认的frame.origin.y,  15为最大增量
-            let translationY = 10 + (offSetY / differenceInNavigationH) * 15
+            //10是searchTextField默认的frame.origin.y,  15和20分别对应刘海屏和非刘海屏的最大增量
+            let translationY = 10 + (offSetY / differenceInNavigationH) * (hasTopNotch() ? 15 : 20)
             searchTF.frame.origin.y = translationY
             
             //searchTextField的背景颜色在(238,238,239)和(255,255,255)之间渐变
@@ -323,6 +312,9 @@ extension WebViewController {
         view.addSubview(navView)
         view.addSubview(webView)
         view.addSubview(tabbarView)
+        
+        searchTF = navView.searchTextField
+        searchBar = navView.searchBar
     }
     
     //配置搜索框
@@ -409,24 +401,6 @@ extension WebViewController {
             } else {
                 searchTF.leftView = nil
             }
-        }
-    }
-    
-    //因为关闭键盘时，系统会使该按钮失效
-    //因此拿到这个按钮，并阻止它失效
-    private func setCancelBtnEnable() {
-        if cancelBtn == nil {
-            guard let buttonClass = NSClassFromString("UINavigationButton") else { return }
-
-            for subview in searchBar.subviews[0].subviews[0].subviews {
-                if subview.isKind(of: buttonClass) {
-                    cancelBtn = (subview as! UIButton)
-                    cancelBtn?.isEnabled = true
-                    return
-                }
-            }
-        } else {
-            cancelBtn!.isEnabled = true
         }
     }
     
